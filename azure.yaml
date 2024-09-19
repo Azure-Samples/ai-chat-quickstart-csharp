@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: ai-chat-quickstart-csharp
+metadata:
+  template: ai-chat-quickstart-csharp@0.1.0-beta
+requiredVersions:
+    azd: ">= 1.10.0"
+services:
+  aca:
+    project: src/ai-chat-vision-quickstart/
+    language: csharp
+    host: containerapp
+    docker:
+      remoteBuild: true
