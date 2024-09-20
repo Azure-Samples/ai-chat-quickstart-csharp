@@ -69,7 +69,7 @@ resource openAiResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' exi
   name: !empty(openAiResourceGroupName) ? openAiResourceGroupName : resourceGroup.name
 }
 
-var prefix = '${name}-${resourceToken}'
+var prefix = toLower('${name}-${resourceToken}')
 
 module openAi 'core/ai/cognitiveservices.bicep' = if (createAzureOpenAi) {
   name: 'openai'
