@@ -1,38 +1,12 @@
-﻿using Azure;
-using Azure.Identity;
-using Microsoft.SemanticKernel;
+﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
-using OllamaSharp.Models;
+using AIChatApp.Model;
 
-public record ChatRequest(List<Message> Messages, MessageContext? Context)
-{}
+namespace AIChatApp.Services;
 
-public record Message
+internal class ChatHandler(IChatCompletionService chatService)
 {
-    public string Role
-    {
-        get; set;
-    }
-
-    public string Content
-    {
-        get; set;
-    }
-}
-
-public record MessageContext
-{
-    public string ContentType { get; set; }
-
-    public string ImageURI
-    {
-        get; set;
-    }
-}
-
-internal class ChatHandler
-{
-    internal async Task<Message> Chat(List<Message> messages, IChatCompletionService chatService)
+    internal async Task<Message> Chat(List<Message> messages)
     {
         ChatHistory history = new ChatHistory("You are a helpful assistant.");
         foreach (Message message in messages)
@@ -49,7 +23,7 @@ internal class ChatHandler
         };
     }
 
-    internal async IAsyncEnumerable<string> Stream(ChatRequest request, IChatCompletionService chatService)
+    internal async IAsyncEnumerable<string> Stream(ChatRequest request)
     {
         ChatHistory history = new ChatHistory("You are a helpful assistant.");
         foreach (Message message in request.Messages)

@@ -1,0 +1,26 @@
+﻿@using AIChatApp.Model
+
+@* TODO: don't use magic strings *@
+@if (State.Role.Equals("User"))
+{
+    <div class="message">
+        <div class="sender-name">You</div>
+        <div class="message-content">
+            <div class="message-text">@State.Content</div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="message assistant visible">
+        <div class="sender-name">Assistant</div>
+        <div class="message-content" visi> @* @ref="messageContentElement"> *@
+            <div class="message-text">@(string.IsNullOrEmpty(State.Content) ? "..." : State.Content)</div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Message State { get; set; } = default!;
+} 

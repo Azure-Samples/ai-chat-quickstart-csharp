@@ -4,10 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>OpenAI_Chat_App_Quickstart_Razor</RootNamespace>
+    <RootNamespace>AIChatApp</RootNamespace>
     <UserSecretsId>b0ee5b46-677b-4906-bcc3-e74dafe7a50f</UserSecretsId>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.12.0" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.19.0" />

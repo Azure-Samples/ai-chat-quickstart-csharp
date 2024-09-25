@@ -1,41 +1,47 @@
-using System;
-using Azure.Core;
 using Azure.Identity;
 using Microsoft.SemanticKernel;
+using AIChatApp.Components;
+using AIChatApp.Model;
+using AIChatApp.Services;
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
 
+// Configure AI related features
 builder.Services.AddKernel();
 
-// Azure OpenAI
-builder.Services.AddAzureOpenAIChatCompletion(Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT"),
-    Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT"),
+builder.Services.AddAzureOpenAIChatCompletion(builder.Configuration["AZURE_OPENAI_DEPLOYMENT"]!,
+    builder.Configuration["AZURE_OPENAI_ENDPOINT"]!,
     new DefaultAzureCredential());
+
+builder.Services.AddSingleton<ChatHandler>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
+//app.UseRouting();
 
-app.UseRouting();
+app.UseAntiforgery();
 
-app.UseAuthorization();
+app.MapRazorComponents<App>()
+   .AddInteractiveServerRenderMode();
 
-app.MapRazorPages();
-
-var chatHandler = new ChatHandler();
-
-app.MapPost("/chat", chatHandler.Chat);
-app.MapPost("/chat/stream", chatHandler.Stream);
+// Configure APIs for chat related features
+//app.MapPost("/chat", (ChatRequest request, ChatHandler chatHandler) => (chatHandler.);
+app.MapPost("/chat/stream", (ChatRequest request, ChatHandler chatHandler) => chatHandler.Stream(request));
 
 app.Run();

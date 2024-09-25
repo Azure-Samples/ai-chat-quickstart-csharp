@@ -12,3 +12,16 @@ services:
     host: containerapp
     docker:
       remoteBuild: true
+hooks:
+  # Create .NET User Secrets for all generated environment variables
+  postprovision:
+    windows:
+      shell: pwsh
+      run: ./infra/post-script/store-env-vars.ps1
+      interactive: false
+      continueOnError: true
+    posix:
+      shell: sh
+      run: ./infra/post-script/store-env-vars.sh
+      interactive: false
+      continueOnError: true
