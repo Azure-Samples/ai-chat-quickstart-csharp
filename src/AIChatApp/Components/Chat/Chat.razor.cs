@@ -8,14 +8,13 @@ namespace AIChatApp.Components.Chat;
 public partial class Chat
 {
     [Inject]
-    internal ChatHandler ChatHandler { get; init; }
+    internal ChatHandler? ChatHandler { get; init; }
     List<Message> messages = new();
     ElementReference writeMessageElement;
     string? userMessageText;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        Console.WriteLine("OnAfterRenderAsync");
         if (firstRender)
         {
             try
@@ -32,19 +31,20 @@ public partial class Chat
 
     async void SendMessage()
     {
+        if (ChatHandler is null) { return; }
+
         if (!string.IsNullOrWhiteSpace(userMessageText))
         {
             // Add the user's message to the UI
             // TODO: Don't rely on "magic strings" for the Role
             messages.Add(new Message() {
-                Role = "User",
+                IsAssistant = false,
                 Content = userMessageText
                 });
                 
             userMessageText = null;
 
-            //TODO: What's the right way to handle context here?
-            ChatRequest request = new ChatRequest(messages, null);
+            ChatRequest request = new ChatRequest(messages);
             string response = "";
 
             IAsyncEnumerable<string> chunks = ChatHandler.Stream(request);
@@ -56,19 +56,9 @@ public partial class Chat
 
             // Add the assistant's reply to the UI
             messages.Add(new Message() {
-                Role = "Assistant",
+                IsAssistant = true,
                 Content = response
                 });            
         }
-    }
-
-    private void HandleResponseCompleted(Message message)
-    {
-        // If it was cancelled before the response started, remove the message entirely
-        // But if there was some text already, keep it
-        // if (string.IsNullOrEmpty(state.Text))
-        // {
-        //     messages.Remove(state);
-        // }
     }
 }

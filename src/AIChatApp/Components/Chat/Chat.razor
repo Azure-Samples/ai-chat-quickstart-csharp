@@ -11,7 +11,7 @@
     <div class="messages-scroller">
         <div class="messages">
             <ChatMessage
-                State="@(new Message(){Role = "Assistant", Content = "Hi, I'm a helpful assistant, how may I assist you?"})" />
+                State="@(new Message(){IsAssistant = true, Content = "Hi, I'm a helpful assistant, how may I assist you?"})" />
             @for (var i = 0; i < messages.Count; i++)
             {
                 var id = $"message{i}";

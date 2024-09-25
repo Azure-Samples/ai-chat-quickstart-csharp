@@ -7,7 +7,7 @@ requiredVersions:
     azd: ">= 1.10.0"
 services:
   aca:
-    project: src/ai-chat-vision-quickstart/
+    project: src/AIChatApp/
     language: csharp
     host: containerapp
     docker:

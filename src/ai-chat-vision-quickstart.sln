@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ai-chat-vision-quickstart", "ai-chat-vision-quickstart\ai-chat-vision-quickstart.csproj", "{AC66B3F8-C2F8-466C-A932-24527A2E9C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIChatApp", "AIChatApp\AIChatApp.csproj", "{AC66B3F8-C2F8-466C-A932-24527A2E9C9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

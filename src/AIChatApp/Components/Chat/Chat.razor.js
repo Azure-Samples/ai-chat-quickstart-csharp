@@ -7,11 +7,8 @@ export function submitOnEnter(formElem) {
     });
 
     formElem.addEventListener('submit', e => {
-        // If you're nearly scrolled to the end, scroll entirely to the end so that
-        // when new content is added it will auto-scroll and follow it
-        const messagesScroller = document.querySelector('.messages-scroller');
-        if (Math.abs(messagesScroller.scrollTop) < 5) {
-            messagesScroller.scrollTop = 0;
-        }
+        // Scroll the last message into view
+        var lastMessage = document.querySelector(".messages-scroller").lastChild;
+        lastMessage.scrollIntoView({behavior: "instant", block: "end"});
     });
 }

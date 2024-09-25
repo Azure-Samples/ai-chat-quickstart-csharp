@@ -7,7 +7,7 @@
     .chat .messages-scroller {
         /* Make the scrollbar default to being at the end, instead of the start */
         display: flex;
-        /*flex-direction: column-reverse;*/
+        flex-direction: column-reverse;
         overflow-y: auto;
         flex-grow: 1;
     }

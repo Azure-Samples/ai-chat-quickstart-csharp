@@ -33,7 +33,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-//app.UseRouting();
 
 app.UseAntiforgery();
 
@@ -41,7 +40,7 @@ app.MapRazorComponents<App>()
    .AddInteractiveServerRenderMode();
 
 // Configure APIs for chat related features
-//app.MapPost("/chat", (ChatRequest request, ChatHandler chatHandler) => (chatHandler.);
+//app.MapPost("/chat", (ChatRequest request, ChatHandler chatHandler) => (chatHandler.); // Uncomment for a non-streaming response
 app.MapPost("/chat/stream", (ChatRequest request, ChatHandler chatHandler) => chatHandler.Stream(request));
 
 app.Run();
