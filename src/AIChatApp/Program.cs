@@ -14,9 +14,37 @@ builder.Services.AddRazorComponents()
 // Configure AI related features
 builder.Services.AddKernel();
 
-builder.Services.AddAzureOpenAIChatCompletion(builder.Configuration["AZURE_OPENAI_DEPLOYMENT"]!,
-    builder.Configuration["AZURE_OPENAI_ENDPOINT"]!,
-    new DefaultAzureCredential());
+var aiHost = builder.Configuration["AIHost"];
+if (String.IsNullOrEmpty(aiHost))
+{
+    aiHost = "OpenAI";
+}
+
+switch (aiHost) {
+    case "github":
+        #pragma warning disable SKEXP0070 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+        builder.Services.AddAzureAIInferenceChatCompletion(
+            modelId: builder.Configuration["GITHUB_MODEL_NAME"],
+            builder.Configuration["GITHUB_TOKEN"],
+            new Uri("https://models.inference.ai.azure.com"));
+        break;
+    case "azureAIModelCatalog":
+        builder.Services.AddAzureAIInferenceChatCompletion(
+            builder.Configuration["AZURE_MODEL_NAME"],
+            builder.Configuration["AZURE_INFERENCE_KEY"],
+            new Uri(builder.Configuration["AZURE_MODEL_ENDPOINT"]!));
+        break;
+    case "local":
+        builder.Services.AddOllamaChatCompletion(
+            modelId: builder.Configuration["LOCAL_MODEL_NAME"],
+            endpoint: new Uri("http://localhost:11434"));
+        break;
+    default:
+        builder.Services.AddAzureOpenAIChatCompletion(builder.Configuration["AZURE_OPENAI_DEPLOYMENT"]!,
+            builder.Configuration["AZURE_OPENAI_ENDPOINT"]!,
+            new DefaultAzureCredential());
+        break;
+}
 
 builder.Services.AddSingleton<ChatHandler>();
 

@@ -45,20 +45,23 @@ public partial class Chat
             userMessageText = null;
 
             ChatRequest request = new ChatRequest(messages);
-            string response = "";
+
+            // Add a temporary message that a response is being generated
+            Message assistantMessage = new Message() {
+                IsAssistant = true,
+                Content = ""
+                };
+            
+            messages.Add(assistantMessage);
+            StateHasChanged();
 
             IAsyncEnumerable<string> chunks = ChatHandler.Stream(request);
+
             await foreach (var chunk in chunks)
             {
-                response += chunk;
+                assistantMessage.Content += chunk;
                 StateHasChanged();
             }
-
-            // Add the assistant's reply to the UI
-            messages.Add(new Message() {
-                IsAssistant = true,
-                Content = response
-                });            
         }
     }
 }
