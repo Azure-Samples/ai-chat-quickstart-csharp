@@ -8,7 +8,7 @@ namespace AIChatApp.Components.Chat;
 public partial class Chat
 {
     [Inject]
-    internal ChatHandler? ChatHandler { get; init; }
+    internal ChatService? ChatHandler { get; init; }
     List<Message> messages = new();
     ElementReference writeMessageElement;
     string? userMessageText;

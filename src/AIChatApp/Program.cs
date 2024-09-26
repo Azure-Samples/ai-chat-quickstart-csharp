@@ -1,11 +1,14 @@
-using Azure.Identity;
-using Microsoft.SemanticKernel;
 using AIChatApp.Components;
 using AIChatApp.Model;
 using AIChatApp.Services;
-using Microsoft.AspNetCore.Mvc;
+using Azure.Identity;
+using Microsoft.SemanticKernel;
+using Microsoft.Extensions.Configuration.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add support for a local configuration file, which doesn't get committed to source control
+builder.Configuration.Sources.Insert(0, new JsonConfigurationSource { Path = "appsettings.Local.json", Optional = true });
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -37,7 +40,7 @@ switch (aiHost) {
     case "local":
         builder.Services.AddOllamaChatCompletion(
             modelId: builder.Configuration["LOCAL_MODEL_NAME"],
-            endpoint: new Uri("http://localhost:11434"));
+            endpoint: new Uri(builder.Configuration["LOCAL_ENDPOINT"]!));
         break;
     default:
         builder.Services.AddAzureOpenAIChatCompletion(builder.Configuration["AZURE_OPENAI_DEPLOYMENT"]!,
@@ -46,7 +49,7 @@ switch (aiHost) {
         break;
 }
 
-builder.Services.AddSingleton<ChatHandler>();
+builder.Services.AddSingleton<ChatService>();
 
 var app = builder.Build();
 
@@ -69,6 +72,6 @@ app.MapRazorComponents<App>()
 
 // Configure APIs for chat related features
 //app.MapPost("/chat", (ChatRequest request, ChatHandler chatHandler) => (chatHandler.); // Uncomment for a non-streaming response
-app.MapPost("/chat/stream", (ChatRequest request, ChatHandler chatHandler) => chatHandler.Stream(request));
+app.MapPost("/chat/stream", (ChatRequest request, ChatService chatHandler) => chatHandler.Stream(request));
 
 app.Run();

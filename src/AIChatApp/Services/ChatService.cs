@@ -4,7 +4,7 @@ using AIChatApp.Model;
 
 namespace AIChatApp.Services;
 
-internal class ChatHandler(IChatCompletionService chatService)
+internal class ChatService(IChatCompletionService chatService)
 {
     internal async Task<Message> Chat(ChatRequest request)
     {
