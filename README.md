@@ -1,4 +1,4 @@
-# Chat Application using Azure OpenAI (Python)
+# Chat Application using Azure OpenAI (C#/.NET)
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Azure-Samples/ai-chat-app-csharp)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/ai-chat-app-csharp)
