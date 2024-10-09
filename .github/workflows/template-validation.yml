@@ -1,4 +1,4 @@
-name: Template Validation Sample Workflow
+name: Template Validation Workflow
 on: 
   workflow_dispatch:
 
