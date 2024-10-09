@@ -12,6 +12,11 @@ services:
     host: containerapp
     docker:
       remoteBuild: true
+pipeline:
+  variables:
+    - AZURE_OPENAI_DEPLOYMENT
+    - AZURE_OPENAI_MODEL
+    - AZURE_OPENAI_RESOURCE_LOCATION
 hooks:
   # Create .NET User Secrets for all generated environment variables
   postprovision:
