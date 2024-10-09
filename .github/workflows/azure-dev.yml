@@ -27,16 +27,16 @@ jobs:
       - name: Install azd 
         uses: Azure/setup-azd@v1.0.0
 
-      - name: Run Microsoft Security DevOps Analysis
-        uses: microsoft/security-devops-action@v1
-        id: msdo
-        with:
-          tools: templateanalyzer
+      #- name: Run Microsoft Security DevOps Analysis
+      #  uses: microsoft/security-devops-action@v1
+      #  id: msdo
+      #  with:
+      #    tools: templateanalyzer
 
-      - name: Upload results to Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+      #- name: Upload results to Security tab
+      #  uses: github/codeql-action/upload-sarif@v2
+      #  with:
+      #    sarif_file: ${{ steps.msdo.outputs.sarifFile }}
 
       - name: Log in with Azure (Federated Credentials)
         if: ${{ env.AZURE_CLIENT_ID != '' }}
