@@ -25,8 +25,13 @@ param openAiResourceGroupName string = ''
 // Look for the desired model in availability table. Default model is gpt-4o-mini:
 // https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability
 @allowed([
-  'eastus'
-  'swedencentral'
+  'eastus',
+  'eastus2',
+  'northcentralus',
+  'southcentralus',
+  'swedencentral',
+  'westus',
+  'westus3'
 ])
 @metadata({
   azd: {
