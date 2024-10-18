@@ -27,7 +27,7 @@
         "value": "${AZURE_OPENAI_RESOURCE_GROUP}"
       },
       "openAiResourceLocation": {
-        "value": "${AZURE_OPENAI_RESOURCE_LOCATION}=eastus2"
+        "value": "${AZURE_OPENAI_RESOURCE_LOCATION=eastus2}"
       },
       "openAiDeploymentCapacity": {
         "value": "${AZURE_OPENAI_DEPLOYMENT_CAPACITY=30}"
