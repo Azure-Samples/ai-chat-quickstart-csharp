@@ -69,7 +69,7 @@ If you're not using one of the above options for opening the project, then you'l
 2. Download the project code:
 
     ```shell
-    azd init -t ai-chat-app-csharp
+    azd init -t ai-chat-quickstart-csharp
     ```
 
 3. If you're using Visual Studio, open the src/ai-chat-quickstart.sln solution file. If you're using VS Code, open the src folder.
